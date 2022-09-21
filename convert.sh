@@ -6,7 +6,7 @@ OUTPUT_FILE='transactions.csv'
 # find pdf2txt.py
 PDF2TXT=$(which pdf2txt.py)
 
-PDF_FILES=$(find -H . -type f -regextype posix-extended -regex '\./.+\.pdf' -print)
+PDF_FILES=$(find -E -H . -type f -regex '\./.+\.pdf' -print)
 
 for PDF in ${PDF_FILES};
 do
@@ -14,7 +14,7 @@ do
 	python "${PDF2TXT}" -o "${XML_FILE}.xml" "${PDF}" 
 done
 
-XML_FILES=($(find -H . -maxdepth 1 -type f -regextype posix-extended -regex '\./.+\.xml' -print))
+XML_FILES=($(find -E -H . -maxdepth 1 -type f -regex '\./.+\.xml' -print))
 
 echo "${XML_FILES[@]}"
 python convert.py "${OUTPUT_FILE}" "${XML_FILES[@]}"
